@@ -21,6 +21,7 @@ endif()
 
 if(UNIX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+  list(APPEND CLIP_SOURCES clip_x11.cpp)
 endif()
 
 add_library(clip ${CLIP_SOURCES})
