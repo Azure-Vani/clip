@@ -4,42 +4,46 @@
 namespace clip {
 
 lock::impl::impl(void*) {}
-~lock::impl::impl() {}
+lock::impl::~impl() {}
 
 bool lock::impl::locked() const {
-  // TODO
-  return false;
+  return true;
 }
 
 bool lock::impl::clear() {
   // TODO
 }
 
-bool is_convertiable(format f) const {
+bool lock::impl::is_convertible(format f) const {
+  // TODO: Currently it only supports text format, will support other format
+  // listed at ICCCM standard in future.
+  if (f == text_format()) {
+    return true;
+  }
+  return false;
+}
+
+bool lock::impl::set_data(format f, const char* buf, size_t len) {
   // TODO
 }
 
-bool set_data(format f, const char* buf, size_t len) {
+bool lock::impl::get_data(format f, char *buf, size_t len) const {
   // TODO
 }
 
-bool get_data(format f, char *buf, size_t len) const {
+size_t lock::impl::get_data_length(format f) const {
   // TODO
 }
 
-size_t get_data_length(format f) const {
+bool lock::impl::set_image(const image& image) {
   // TODO
 }
 
-bool set_image(const image& image) {
+bool lock::impl::get_image(image& image) const {
   // TODO
 }
 
-bool get_image(image& image) const {
-  // TODO
-}
-
-bool get_image_spec(image_spec& spec) const {
+bool lock::impl::get_image_spec(image_spec& spec) const {
   // TODO
 }
 
