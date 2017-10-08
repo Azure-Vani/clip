@@ -1,9 +1,24 @@
 #include "clip.h"
-#include "clip_win.h"
+#include "clip_x11.h"
 
 namespace clip {
 
-lock::impl::impl(void*) {}
+lock::impl::impl(void*) {
+  x11_connection_ = xcb_connect(nullptr, nullptr);
+  if (x11_connection_ == nullptr) {
+    error_handler e = get_error_handler();
+    if (e) e(ErrorCode::CannotLock);
+  }
+
+  xcb_screen_t* screen;
+  screen = xcb_setup_roots_iterator(xcb_get_setup(x11_connection_)).data;
+
+  x11_window_ = xcb_generate_id(x11_connection_);
+  xcb_create_window(x11_connection_, screen->root_depth, x11_window_,
+                    screen->root, 0, 0, 1, 1, 0,
+                    XCB_COPY_FROM_PARENT, screen->root_visual, 0, 0);
+}
+
 lock::impl::~impl() {}
 
 bool lock::impl::locked() const {
