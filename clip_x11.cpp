@@ -19,7 +19,9 @@ lock::impl::impl(void*) {
                     XCB_COPY_FROM_PARENT, screen->root_visual, 0, 0);
 }
 
-lock::impl::~impl() {}
+lock::impl::~impl() {
+  xcb_disconnect(x11_connection_);
+}
 
 bool lock::impl::locked() const {
   return true;
